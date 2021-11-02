@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">SheetLeaf</string>
+    <string name="title">SheetLeaf</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="forgot_pass">Glemt kodeord?</string>
+    <string name="new_profile">Ny Profil!</string>
+    <string name="login_btn">Log in</string>
+    <string name="create_user_title">Opret Profil</string>
+    <string name="name_hint">Navn</string>
+    <string name="terms_confirmation">Jeg accepterer hermed at min data bliver brugt i overensstemmelse med VILKÅR OG BETINGELSER.</string>
+    <string name="terms_link"><u>VILKÅR OG BETINGELSER</u></string>
+    <string name="parents_confirmation">Jeg erkender hermed at jeg er over 13år gammel eller at jeg har fået lov af en forældre eller værge til at bruge denne app.</string>
+    <string name="password_repeat">Gentag Password</string>
+    <string name="create_profile_btn">Opret!</string>
+
+    <!-- Errors -->
+    <string name="exception_error">NULL Exception</string>
+    <string name="common_206">Der skete en manglende data fejl.</string>
+    <string name="common_500">Der skete en intern fejl.</string>
+    <string name="common_xxx">Der skete en ukendt fejl.</string>
+
+
+    <!-- Create profile-->
+    <string name="create_profile_success">Profil ´{0}´ oprettet!</string>
+    <string name="create_profile_400">Der skete en fejl under oprettelsen.</string>
+    <string name="create_profile_409">En bruger med den email findes allerede.</string>
+
+</resources>
