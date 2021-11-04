@@ -22,6 +22,7 @@
             android:layout_marginStart="10dp"
             />
         <EditText
+            android:text="test@gmail.com"
             android:id="@+id/editEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +48,7 @@
             android:layout_marginStart="10dp"
             />
         <EditText
+            android:text="frede"
             android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,6 +72,7 @@
             android:layout_marginStart="10dp"
             />
         <EditText
+            android:text="password"
             android:id="@+id/editPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,6 +86,7 @@
             android:inputType="textPassword" />
 
         <EditText
+            android:text="password"
             android:id="@+id/editPassword2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,7 +106,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:checked="false"
+            android:checked="true"
             android:text="@string/terms_confirmation"/>
 
         <TextView
@@ -124,7 +128,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
-            android:checked="false"
+            android:checked="true"
             android:text="@string/parents_confirmation"/>
 
         <Button

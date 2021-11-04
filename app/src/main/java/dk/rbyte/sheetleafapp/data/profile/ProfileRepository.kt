@@ -1,12 +1,11 @@
 package dk.rbyte.sheetleafapp.data.profile
 
 import android.content.res.Resources
+import android.util.Log
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.data.WebServerPointer
-import retrofit2.Call
-import retrofit2.Retrofit
+import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -25,7 +24,28 @@ class ProfileRepository {
 
 
     fun createProfile(profile: ProfileDTO, callback: (Result<UserDTO>) -> Unit) {
-        executor.execute {
+
+        val profileApi = ProfileApi.create().createProfile(profile)
+
+        profileApi.enqueue(object : Callback<UserDTO> {
+            override fun onResponse(call: Call<UserDTO>, response: Response<UserDTO>) {
+                when {
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body == null) callback(Result.failure(Exception(getError(206))))
+                        else callback(Result.success(body))
+                    }
+                    else ->callback(Result.failure(Exception(getError(response.code()))))
+                }
+            }
+
+            override fun onFailure(call: Call<UserDTO>, t: Throwable) {
+                callback(Result.failure(t))
+            }
+
+        })
+
+        /*executor.execute {
             val resp = api.createProfile(profile).execute()
             when {
                 resp.isSuccessful -> {
@@ -35,9 +55,16 @@ class ProfileRepository {
                 }
                 else -> callback(Result.failure(Exception(getError(resp.code()))))
             }
+        }*/
+
+    }
+
+    fun testConnection() {
+        executor.execute {
+            val resp = api.getTest().execute()
+
+            //Log.i("Testing", resp.message() + resp.code())
         }
-
-
     }
 
     private fun getError(errorCode: Int): String {
@@ -53,10 +80,29 @@ class ProfileRepository {
 
 
 interface ProfileApi {
+    @GET("/api/user/getByID/1")
+    fun getTest(): Call<UserDTO>
 
     @POST("/open/profile/create")
     fun createProfile(@Body profile: ProfileDTO): Call<UserDTO>
 
     @GET("/api/user/getByID/{id}")
-    fun getUser(@Path("id") id: Number)
+    fun getUser(@Path("id") id: Number): Call<UserDTO>
+
+
+    companion object {
+
+        var BASE_URL = WebServerPointer.getBaseURL()
+
+        fun create() : ProfileApi {
+
+            val retrofit = Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASE_URL)
+                .build()
+            return retrofit.create(ProfileApi::class.java)
+
+        }
+    }
+
 }

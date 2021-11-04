@@ -29,11 +29,12 @@ class CreateProfileActivity : AppCompatActivity() {
         }
 
         viewModel.userLiveData.observe(this, Observer {
-            if (viewModel.updated) {
+            if (viewModel.updated && viewModel.userLiveData.value != null) {
                 Toast.makeText(
                     applicationContext,
                     String.format(
-                        Resources.getSystem().getString(R.string.create_profile_success),
+                        applicationContext.getString(R.string.create_profile_success),
+                        viewModel.userLiveData.value!!.email
                     ),
                     Toast.LENGTH_SHORT
                 ).show()

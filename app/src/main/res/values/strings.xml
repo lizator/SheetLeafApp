@@ -22,7 +22,7 @@
 
 
     <!-- Create profile-->
-    <string name="create_profile_success">Profil ´{0}´ oprettet!</string>
+    <string name="create_profile_success">Profil %s oprettet!</string>
     <string name="create_profile_400">Der skete en fejl under oprettelsen.</string>
     <string name="create_profile_409">En bruger med den email findes allerede.</string>
 
