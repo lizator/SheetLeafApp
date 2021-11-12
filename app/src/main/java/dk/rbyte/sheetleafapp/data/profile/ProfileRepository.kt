@@ -1,7 +1,6 @@
 package dk.rbyte.sheetleafapp.data.profile
 
 import android.content.res.Resources
-import android.util.Log
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.data.WebServerPointer
 import retrofit2.*
@@ -73,7 +72,7 @@ class ProfileRepository {
             400 -> Resources.getSystem().getString(R.string.create_profile_400)
             409 -> Resources.getSystem().getString(R.string.create_profile_409)
             500 -> Resources.getSystem().getString(R.string.common_500)
-            else -> Resources.getSystem().getString(R.string.common_xxx)
+            else -> Resources.getSystem().getString(R.string.common_unknown_error)
         }
     }
 }
