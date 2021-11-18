@@ -36,7 +36,8 @@
     <string name="login_success">Velkommen %s, til SheetLeaf!</string>
     <string name="login_403">Forkert email eller kodeord</string>
     <string name="login_404">En bruger med den email blev ikke fundet</string>
-
+    <string name="character_header">Karakterer</string>
+    <string name="gameoverview_game_header">Spil:</string>
 
 
 </resources>

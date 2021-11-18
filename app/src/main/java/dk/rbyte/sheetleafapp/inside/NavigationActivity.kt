@@ -2,6 +2,7 @@ package dk.rbyte.sheetleafapp.inside
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.databinding.ActivityLoginBinding
 import dk.rbyte.sheetleafapp.databinding.ActivityNavigationBinding
@@ -22,7 +23,13 @@ class NavigationActivity : AppCompatActivity() {
         val root =  binding.root
         setContentView(R.layout.activity_navigation)
 
-        gamesOverviewFragment = GamesOverviewFragment.newInstance("","")
+        val userID = intent.getIntExtra("userID", -1)
+        if (userID == -1) {
+            Toast.makeText(applicationContext, "Der skete en fejl med brugeren", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+        gamesOverviewFragment = GamesOverviewFragment.newInstance(userID)
         profileOverviewFragment = ProfileOverviewFragment.newInstance("","")
         characterSheetFragment = CharacterSheetFragment.newInstance("","")
 
