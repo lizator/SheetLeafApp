@@ -3,6 +3,7 @@ package dk.rbyte.sheetleafapp.data.profile
 import android.content.res.Resources
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.data.WebServerPointer
+import dk.rbyte.sheetleafapp.outside.LoginActivity
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -44,35 +45,15 @@ class ProfileRepository {
 
         })
 
-        /*executor.execute {
-            val resp = api.createProfile(profile).execute()
-            when {
-                resp.isSuccessful -> {
-                    val body = resp.body()
-                    if (body == null) callback(Result.failure(Exception(getError(206))))
-                    else callback(Result.success(body))
-                }
-                else -> callback(Result.failure(Exception(getError(resp.code()))))
-            }
-        }*/
-
-    }
-
-    fun testConnection() {
-        executor.execute {
-            val resp = api.getTest().execute()
-
-            //Log.i("Testing", resp.message() + resp.code())
-        }
     }
 
     private fun getError(errorCode: Int): String {
         return when (errorCode) {
-            206 -> Resources.getSystem().getString(R.string.common_206)
-            400 -> Resources.getSystem().getString(R.string.create_profile_400)
-            409 -> Resources.getSystem().getString(R.string.create_profile_409)
-            500 -> Resources.getSystem().getString(R.string.common_500)
-            else -> Resources.getSystem().getString(R.string.common_unknown_error)
+            206  -> LoginActivity.appResources.getString(R.string.common_206)
+            400  -> LoginActivity.appResources.getString(R.string.create_profile_400)
+            409  -> LoginActivity.appResources.getString(R.string.create_profile_409)
+            500  -> LoginActivity.appResources.getString(R.string.common_500)
+            else -> LoginActivity.appResources.getString(R.string.common_unknown_error)
         }
     }
 }
