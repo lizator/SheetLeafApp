@@ -5,24 +5,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.databinding.FragmentGamesOverviewBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_userID = "userID"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GamesOverviewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GamesOverviewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var userID: Int? = null
 
     private var _binding: FragmentGamesOverviewBinding? = null
     private val binding get() = _binding!!
+
+    private val rotateOpen: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_open_gameoverview) }
+    private val rotateClose: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_close_gameoverview) }
+    private val fromBottom: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.from_bottom_gameoverview) }
+    private val toBottom: Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.to_bottom_gameoverview) }
+    private var addClicked = false
+
+    private val gameOptions = arrayOf("Personligt")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,35 @@ class GamesOverviewFragment : Fragment() {
         val root = binding.root
         //binding.textview.text = userID.toString()
 
+        binding.addbtn.setOnClickListener {
+            onAddButtonClicked()
+        }
+
+        binding.addcharacterbtn.setOnClickListener {
+            //TODO add intent for creating character
+        }
+
+        binding.addgamebtn.setOnClickListener {
+            Toast.makeText(context, "Ikke implementeret", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.gameSpinner.adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, gameOptions)
+
+        binding.gameSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                TODO("Load characters for selected")
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Load characters for personal to start with")
+            }
+
+        }
 
 
 
@@ -55,7 +89,7 @@ class GamesOverviewFragment : Fragment() {
          * @param userID ID of logged in user.
          * @return A new instance of fragment GamesOverviewFragment.
          */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(userID: Int) =
             GamesOverviewFragment().apply {
@@ -63,5 +97,35 @@ class GamesOverviewFragment : Fragment() {
                     putInt(ARG_userID, userID)
                 }
             }
+    }
+
+    private fun onAddButtonClicked() {
+        addClicked = !addClicked
+        setAnimationFloating(addClicked)
+        setVisibilityFloating(addClicked)
+    }
+
+    private fun setVisibilityFloating(clicked: Boolean) {
+        if (clicked) {
+            binding.addcharacterbtn.visibility = View.INVISIBLE
+            binding.addgamebtn.visibility = View.INVISIBLE
+        } else {
+            binding.addcharacterbtn.visibility = View.VISIBLE
+            binding.addgamebtn.visibility = View.VISIBLE
+        }
+        binding.addcharacterbtn.isClickable = clicked
+        binding.addgamebtn.isClickable = clicked
+    }
+
+    private fun setAnimationFloating(clicked: Boolean) {
+        if (clicked) {
+            binding.addgamebtn.startAnimation(fromBottom)
+            binding.addcharacterbtn.startAnimation(fromBottom)
+            binding.addbtn.startAnimation(rotateOpen)
+        } else {
+            binding.addgamebtn.startAnimation(toBottom)
+            binding.addcharacterbtn.startAnimation(toBottom)
+            binding.addbtn.startAnimation(rotateClose)
+        }
     }
 }

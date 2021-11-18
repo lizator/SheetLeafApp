@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,14 +33,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/gameoverview_game_header"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:layout_weight="1"
                     style="@style/text"/>
                 <Spinner
                     android:id="@+id/game_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_marginHorizontal="4dp"/>
             </LinearLayout>
 
@@ -54,6 +55,46 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="@color/purple_200"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_add"
+                android:tint="@android:color/white" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addcharacterbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/addbtn"
+                android:layout_alignEnd="@+id/addbtn"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="invisible"
+                android:clickable="false"
+                android:focusable="true"
+                android:src="@drawable/ic_person_add" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addgamebtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/addcharacterbtn"
+                android:layout_alignEnd="@+id/addcharacterbtn"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="invisible"
+                android:clickable="false"
+                android:focusable="true"
+                android:src="@drawable/ic_add_game" />
         </RelativeLayout>
 
 
