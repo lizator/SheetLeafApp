@@ -1,5 +1,6 @@
 package dk.rbyte.sheetleafapp.inside.gamesOverview
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,8 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.databinding.FragmentGamesOverviewBinding
+import dk.rbyte.sheetleafapp.inside.gamesOverview.create.CreateCharacterActivity
+import dk.rbyte.sheetleafapp.outside.CreateProfileActivity
 
 private const val ARG_userID = "userID"
 
@@ -50,7 +53,8 @@ class GamesOverviewFragment : Fragment() {
         }
 
         binding.addcharacterbtn.setOnClickListener {
-            //TODO add intent for creating character
+            val intent = Intent(context, CreateCharacterActivity::class.java)
+            startActivity(intent)
         }
 
         binding.addgamebtn.setOnClickListener {
@@ -66,11 +70,12 @@ class GamesOverviewFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                TODO("Load characters for selected")
+                //TODO("Load characters for selected")
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Load characters for personal to start with")
+                //TODO("Load characters for personal to start with")
             }
 
         }

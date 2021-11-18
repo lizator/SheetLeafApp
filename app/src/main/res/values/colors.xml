@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="paper">#F9F2DE</color>
+    <color name="yellowishPaper">#D9D2AE</color>
+    <color name="GreyPaper">#B9b29E</color>
     <color name="colorPrimary">#B97A56</color>
     <color name="colorPrimaryfaded">#CCB97A56</color>
     <color name="colorPrimaryDark">#934F2D</color>
