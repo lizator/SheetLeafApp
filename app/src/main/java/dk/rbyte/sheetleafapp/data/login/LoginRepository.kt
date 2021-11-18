@@ -4,6 +4,7 @@ import android.content.res.Resources
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.data.WebServerPointer
 import dk.rbyte.sheetleafapp.data.profile.UserDTO
+import dk.rbyte.sheetleafapp.outside.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,11 +42,11 @@ class LoginRepository {
 
     private fun getError(errorCode: Int): String {
         return when (errorCode) {
-            206 -> Resources.getSystem().getString(R.string.common_206)
-            403 -> Resources.getSystem().getString(R.string.login_403)
-            404 -> Resources.getSystem().getString(R.string.login_404)
-            500 -> Resources.getSystem().getString(R.string.common_500)
-            else -> Resources.getSystem().getString(R.string.common_unknown_error)
+            206  -> LoginActivity.appResources.getString(R.string.common_206)
+            403  -> LoginActivity.appResources.getString(R.string.login_403)
+            404  -> LoginActivity.appResources.getString(R.string.login_404)
+            500  -> LoginActivity.appResources.getString(R.string.common_500)
+            else -> LoginActivity.appResources.getString(R.string.common_unknown_error)
         }
     }
 
