@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dk.rbyte.sheetleafapp.databinding.FragmentLongStringBinding
+import dk.rbyte.sheetleafapp.inside.characterSheet.fields.FieldFragment
 
 private const val TITLE_PARAM = "title"
 private const val VALUE_PARAM = "value"
 
-class LongStringFragment : Fragment() {
+class LongStringFragment : FieldFragment() {
     private var _binding: FragmentLongStringBinding? = null
     private val binding get() = _binding!!
 
@@ -32,7 +33,9 @@ class LongStringFragment : Fragment() {
         _binding = FragmentLongStringBinding.inflate(inflater, container, false)
         val root = binding.root
 
-        //TODO insert value and title when UI is made
+        binding.title.text = title.toString()
+
+        binding.value.setText(value.toString())
 
         return root
     }
@@ -48,7 +51,7 @@ class LongStringFragment : Fragment() {
             }
     }
 
-    public fun getValue(): String {
-        return binding.toString() //TODO fix when UI made
+    override fun getValue(): String {
+        return binding.value.text.toString()
     }
 }

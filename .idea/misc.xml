@@ -14,10 +14,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_navigation.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_character_sheet.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_field.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_games_overview.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_long_string.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_profile_overview.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/layout/fragment_real_number.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_short_string.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_create_charactersheet_field_line.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bot_nav_menu.xml" value="0.35572916666666665" />
       </map>
