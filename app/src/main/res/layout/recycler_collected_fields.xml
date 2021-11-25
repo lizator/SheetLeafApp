@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/longStringLayout"
+        layout="@layout/fragment_long_string"
+        android:visibility="gone"
+        />
+
+    <include
+        android:id="@+id/shortStringLayout"
+        layout="@layout/fragment_short_string"
+        android:visibility="gone"
+        />
+
+    <include
+        android:id="@+id/realNumberLayout"
+        layout="@layout/fragment_real_number"
+        android:visibility="gone"
+        />
+
+</LinearLayout>
