@@ -13,7 +13,7 @@ import java.lang.NumberFormatException
 private const val TITLE_PARAM = "title"
 private const val VALUE_PARAM = "value"
 
-class LongStringFragment : FieldFragment() {
+class RealNumberFragment : FieldFragment() {
     private var _binding: FragmentRealNumberBinding? = null
     private val binding get() = _binding!!
 
@@ -45,7 +45,7 @@ class LongStringFragment : FieldFragment() {
     companion object {
         @JvmStatic
         fun newInstance(title: String, value: Int) =
-            LongStringFragment().apply {
+            RealNumberFragment().apply {
                 arguments = Bundle().apply {
                     putString(TITLE_PARAM, title)
                     putInt(VALUE_PARAM, value)

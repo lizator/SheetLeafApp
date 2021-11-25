@@ -12,7 +12,7 @@
         <entry key="app/src/main/res/layout/activity_create_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_navigation.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/activity_navigation.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_character_sheet.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_field.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_games_overview.xml" value="0.33" />
@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_short_string.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_create_charactersheet_field_line.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bot_nav_menu.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/bot_nav_menu3.xml" value="0.24010416666666667" />
       </map>
     </option>
   </component>
