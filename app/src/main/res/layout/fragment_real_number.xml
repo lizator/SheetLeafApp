@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".inside.characterSheet.fields.longString.LongStringFragment"
     android:orientation="horizontal"
     android:background="@color/GreyPaper"
     android:paddingBottom="8dp">
@@ -27,6 +26,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:maxLength="9"/>
+        android:maxLength="9"
+        android:textSize="20sp"
+        android:padding="2dp"/>
 
 </LinearLayout>

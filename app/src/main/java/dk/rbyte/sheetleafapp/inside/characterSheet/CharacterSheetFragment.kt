@@ -96,7 +96,7 @@ class CharacterSheetFragment : Fragment() {
         }
     }
 
-    inner class CharacterFieldAdapter() :
+    private inner class CharacterFieldAdapter() :
         RecyclerView.Adapter<CharacterFieldAdapter.ViewHolder>() {
 
 
