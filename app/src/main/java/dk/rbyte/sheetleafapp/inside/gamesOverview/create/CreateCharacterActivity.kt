@@ -2,9 +2,11 @@ package dk.rbyte.sheetleafapp.inside.gamesOverview.create
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,7 +23,7 @@ import kotlin.collections.ArrayList
 class CreateCharacterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateCharacterBinding
-    private val dataFieldsDragList = ArrayList<DataField>()
+    private val dataFields = ArrayList<DataField>()
     private lateinit var editRecycler: RecyclerView
     private lateinit var previewRecycler: RecyclerView
     private lateinit var dragAdapter: DragableCreationAdapter
@@ -73,9 +75,44 @@ class CreateCharacterActivity : AppCompatActivity() {
             binding.previewListView.visibility = View.GONE
         }
 
+        //Setting up spinner
+
+        //setting up spinner
+        ArrayAdapter.createFromResource(applicationContext,
+            R.array.character_creation_insert_array,
+            android.R.layout.simple_dropdown_item_1line
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            binding.spinnerEditCharactersheet.adapter = adapter
+        }
+
+        //Insert btn setup
+        binding.BtnInsertCharactersheet.setOnClickListener {
+            val choice = binding.spinnerEditCharactersheet.selectedItemPosition
+
+            when (choice) {
+                0 -> { //Long text
+                    dataFields.add(DataField("L1", -1, "", "", FieldTypes.LONG_STRING_FIELD))
+                }
+                1 -> { //Short text
+                    dataFields.add(DataField("S1", -1, "", "", FieldTypes.SHORT_STRING_FIELD))
+                }
+                2 -> { //Int
+                    dataFields.add(DataField("R1", -1, "", 0, FieldTypes.REAL_NUMBER_FIELD))
+                }
+            }
+
+            dragAdapter.notifyItemInserted(dataFields.size-1)
+            previewAdapter.notifyItemInserted(dataFields.size-1)
+
+        }
+
+
 
         //TMP DATA
-        dataFieldsDragList.addAll(arrayListOf(
+        dataFields.addAll(arrayListOf(
             DataField("R1", -1, "", 0, FieldTypes.REAL_NUMBER_FIELD),
             DataField("L1", -1, "", "", FieldTypes.LONG_STRING_FIELD),
             DataField("S1", -1, "", "", FieldTypes.SHORT_STRING_FIELD),
@@ -109,7 +146,7 @@ class CreateCharacterActivity : AppCompatActivity() {
                 val fromPos = viewHolder.adapterPosition
                 val toPos = target.adapterPosition
 
-                Collections.swap(dataFieldsDragList, fromPos, toPos)
+                Collections.swap(dataFields, fromPos, toPos)
                 editRecycler.adapter?.notifyItemMoved(fromPos,toPos)
                 previewRecycler.adapter?.notifyItemMoved(fromPos,toPos)
 
@@ -132,7 +169,7 @@ class CreateCharacterActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(viewHolder: ViewHolder, pos: Int) {
 
-            val dataField = dataFieldsDragList[pos]
+            val dataField = dataFields[pos]
 
             when (dataField.type) {
                 FieldTypes.REAL_NUMBER_FIELD -> {
@@ -152,14 +189,14 @@ class CreateCharacterActivity : AppCompatActivity() {
             viewHolder.titleEdit.setText(dataField.title)
 
             viewHolder.trash.setOnClickListener {
-                dataFieldsDragList.removeAt(viewHolder.adapterPosition)
+                dataFields.removeAt(viewHolder.adapterPosition)
                 dragAdapter.notifyItemRemoved(viewHolder.adapterPosition)
                 previewAdapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }
 
         // Return the size of your dataset (invoked by the layout manager)
-        override fun getItemCount() = dataFieldsDragList.size
+        override fun getItemCount() = dataFields.size
 
     }
 
@@ -197,7 +234,11 @@ class CreateCharacterActivity : AppCompatActivity() {
 
             // Get element from your dataset at this position and replace the
             // contents of the view with that element
-            val dataField = dataFieldsDragList[pos]
+            val dataField = dataFields[pos]
+
+            viewHolder.realNumberLayout.visibility = View.GONE
+            viewHolder.longStringLayout.visibility = View.GONE
+            viewHolder.shortStringLayout.visibility = View.GONE
 
             when (dataField.type) {
                 FieldTypes.REAL_NUMBER_FIELD -> {
@@ -220,7 +261,7 @@ class CreateCharacterActivity : AppCompatActivity() {
         }
 
         // Return the size of your dataset (invoked by the layout manager)
-        override fun getItemCount() = dataFieldsDragList.size
+        override fun getItemCount() = dataFields.size
 
     }
 }
