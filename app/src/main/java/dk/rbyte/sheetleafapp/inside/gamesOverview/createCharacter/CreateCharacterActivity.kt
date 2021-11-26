@@ -1,15 +1,12 @@
-package dk.rbyte.sheetleafapp.inside.gamesOverview.create
+package dk.rbyte.sheetleafapp.inside.gamesOverview.createCharacter
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,15 +17,17 @@ import dk.rbyte.sheetleafapp.databinding.ActivityCreateCharacterBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
+private const val ARG_profileID = "profileID"
+
 class CreateCharacterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateCharacterBinding
-    private val dataFields = ArrayList<DataField>()
     private lateinit var editRecycler: RecyclerView
     private lateinit var previewRecycler: RecyclerView
     private lateinit var dragAdapter: DragableCreationAdapter
     private lateinit var previewAdapter: CharacterFieldPreviewAdapter
 
+    private lateinit var vm: CreateCharacterViewModel
     private val spinnerChoices = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +35,26 @@ class CreateCharacterActivity : AppCompatActivity() {
         binding = ActivityCreateCharacterBinding.inflate(layoutInflater)
         val root =  binding.root
         setContentView(root)
+
+        vm = CreateCharacterViewModel(ArrayList(), intent.getIntExtra(ARG_profileID, -1))
+
+        //Setting up observers for when data is returned
+        vm.collectionLiveData.observe(this, {collection ->
+            if(vm.updated) {
+                val name = collection?.character?.name.toString()
+                Toast.makeText(this, "Karakteren $name er oprettet!", Toast.LENGTH_SHORT).show()
+                vm.updated = false
+                finish()
+            }
+        })
+
+        vm.errorLiveData.observe(this, {
+            if (vm.updated) {
+                Toast.makeText(this, vm.errorLiveData.value.toString(), Toast.LENGTH_SHORT).show()
+                vm.updated = false
+            }
+        })
+
 
 
         //Setting up adapters and recycleviews
@@ -67,11 +86,11 @@ class CreateCharacterActivity : AppCompatActivity() {
         //Setting op switch Btns
         binding.editSwap.setOnClickListener {
             //Saving titles in dataFields
-            for (i in 0..dataFields.size-1) {
+            for (i in 0..vm.dataFields.size-1) {
                 val vh = editRecycler.findViewHolderForAdapterPosition(i) as DragableCreationAdapter.ViewHolder
                 val title = vh.titleEdit.text.toString()
-                if (dataFields[i].title != title) {
-                    dataFields[i].title = title
+                if (vm.dataFields[i].title != title) {
+                    vm.dataFields[i].title = title
                     previewAdapter.notifyItemChanged(i)
                 }
             }
@@ -85,8 +104,6 @@ class CreateCharacterActivity : AppCompatActivity() {
         }
 
         //Setting up spinner
-
-        //setting up spinner
         ArrayAdapter.createFromResource(applicationContext,
             R.array.character_creation_insert_array,
             android.R.layout.simple_dropdown_item_1line
@@ -103,25 +120,38 @@ class CreateCharacterActivity : AppCompatActivity() {
 
             when (choice) {
                 0 -> { //Long text
-                    dataFields.add(DataField("L1", -1, "", "", FieldTypes.LONG_STRING_FIELD))
+                    vm.dataFields.add(DataField("L1", -1, "", "", FieldTypes.LONG_STRING_FIELD))
                 }
                 1 -> { //Short text
-                    dataFields.add(DataField("S1", -1, "", "", FieldTypes.SHORT_STRING_FIELD))
+                    vm.dataFields.add(DataField("S1", -1, "", "", FieldTypes.SHORT_STRING_FIELD))
                 }
                 2 -> { //Int
-                    dataFields.add(DataField("R1", -1, "", 0, FieldTypes.REAL_NUMBER_FIELD))
+                    vm.dataFields.add(DataField("R1", -1, "", 0, FieldTypes.REAL_NUMBER_FIELD))
                 }
             }
 
-            dragAdapter.notifyItemInserted(dataFields.size-1)
-            previewAdapter.notifyItemInserted(dataFields.size-1)
+            dragAdapter.notifyItemInserted(vm.dataFields.size-1)
+            previewAdapter.notifyItemInserted(vm.dataFields.size-1)
 
+        }
+
+        //saveBtn
+        binding.BtnSaveCharactersheet.setOnClickListener {
+            for (i in 0..vm.dataFields.size-1) {
+                val vh = editRecycler.findViewHolderForAdapterPosition(i) as DragableCreationAdapter.ViewHolder
+                val title = vh.titleEdit.text.toString()
+                if (vm.dataFields[i].title != title) {
+                    vm.dataFields[i].title = title
+                    previewAdapter.notifyItemChanged(i)
+                }
+            }
+            privateCreationAlert()
         }
 
 
 
         //TMP DATA
-        dataFields.addAll(arrayListOf(
+        vm.dataFields.addAll(arrayListOf(
             DataField("R1", -1, "", 0, FieldTypes.REAL_NUMBER_FIELD),
             DataField("L1", -1, "", "", FieldTypes.LONG_STRING_FIELD),
             DataField("S1", -1, "", "", FieldTypes.SHORT_STRING_FIELD),
@@ -131,6 +161,25 @@ class CreateCharacterActivity : AppCompatActivity() {
 
     }
 
+    private fun privateCreationAlert() {
+        val builder = AlertDialog.Builder(this)
+
+        val inflater = layoutInflater
+        builder.setTitle("With EditText")
+        val dialogLayout = inflater.inflate(R.layout.alert_create_personal_character, null)
+        val editText  = dialogLayout.findViewById<EditText>(R.id.editName)
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("OK") { _, _ ->
+            val name = editText.text.toString()
+            if (name == "") {
+                Toast.makeText(this, "Du skal give et navn nu!", Toast.LENGTH_SHORT).show()
+                privateCreationAlert()
+            } else {
+                vm.createPersonalCharacter(name)
+            }
+        }
+        builder.show()
+    }
 
 
     private inner class DragableCreationAdapter() :
@@ -155,7 +204,7 @@ class CreateCharacterActivity : AppCompatActivity() {
                 val fromPos = viewHolder.adapterPosition
                 val toPos = target.adapterPosition
 
-                Collections.swap(dataFields, fromPos, toPos)
+                Collections.swap(vm.dataFields, fromPos, toPos)
                 editRecycler.adapter?.notifyItemMoved(fromPos,toPos)
                 previewRecycler.adapter?.notifyItemMoved(fromPos,toPos)
 
@@ -178,17 +227,17 @@ class CreateCharacterActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(viewHolder: ViewHolder, pos: Int) {
 
-            val dataField = dataFields[pos]
+            val dataField = vm.dataFields[pos]
 
             when (dataField.type) {
                 FieldTypes.REAL_NUMBER_FIELD -> {
-                    viewHolder.header.text = "Number (9 decibles)"
+                    viewHolder.header.text = "Tal (Maks. 9 cifre)"
                 }
                 FieldTypes.LONG_STRING_FIELD -> {
-                    viewHolder.header.text = "Long Text (8192 characters)"
+                    viewHolder.header.text = "Lang tekst (8192 karakterer))"
                 }
                 FieldTypes.SHORT_STRING_FIELD -> {
-                    viewHolder.header.text = "Short Text (64 characters)"
+                    viewHolder.header.text = "Kort tekst (64 karakterer)"
                 }
                 else -> {
                     //Error
@@ -198,14 +247,14 @@ class CreateCharacterActivity : AppCompatActivity() {
             viewHolder.titleEdit.setText(dataField.title)
 
             viewHolder.trash.setOnClickListener {
-                dataFields.removeAt(viewHolder.adapterPosition)
+                vm.dataFields.removeAt(viewHolder.adapterPosition)
                 dragAdapter.notifyItemRemoved(viewHolder.adapterPosition)
                 previewAdapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }
 
         // Return the size of your dataset (invoked by the layout manager)
-        override fun getItemCount() = dataFields.size
+        override fun getItemCount() = vm.dataFields.size
 
     }
 
@@ -243,7 +292,7 @@ class CreateCharacterActivity : AppCompatActivity() {
 
             // Get element from your dataset at this position and replace the
             // contents of the view with that element
-            val dataField = dataFields[pos]
+            val dataField = vm.dataFields[pos]
 
             viewHolder.realNumberLayout.visibility = View.GONE
             viewHolder.longStringLayout.visibility = View.GONE
@@ -270,7 +319,7 @@ class CreateCharacterActivity : AppCompatActivity() {
         }
 
         // Return the size of your dataset (invoked by the layout manager)
-        override fun getItemCount() = dataFields.size
+        override fun getItemCount() = vm.dataFields.size
 
     }
 }

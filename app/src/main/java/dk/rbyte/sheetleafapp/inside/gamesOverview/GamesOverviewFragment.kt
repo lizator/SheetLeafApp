@@ -13,13 +13,12 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.databinding.FragmentGamesOverviewBinding
-import dk.rbyte.sheetleafapp.inside.gamesOverview.create.CreateCharacterActivity
-import dk.rbyte.sheetleafapp.outside.CreateProfileActivity
+import dk.rbyte.sheetleafapp.inside.gamesOverview.createCharacter.CreateCharacterActivity
 
-private const val ARG_userID = "userID"
+private const val ARG_profileID = "profileID"
 
 class GamesOverviewFragment : Fragment() {
-    private var userID: Int? = null
+    private var profileID: Int? = null
 
     private var _binding: FragmentGamesOverviewBinding? = null
     private val binding get() = _binding!!
@@ -35,7 +34,7 @@ class GamesOverviewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            userID = it.getInt(ARG_userID)
+            profileID = it.getInt(ARG_profileID)
         }
 
     }
@@ -43,7 +42,7 @@ class GamesOverviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentGamesOverviewBinding.inflate(inflater, container, false)
         val root = binding.root
         //binding.textview.text = userID.toString()
@@ -54,6 +53,7 @@ class GamesOverviewFragment : Fragment() {
 
         binding.addcharacterbtn.setOnClickListener {
             val intent = Intent(context, CreateCharacterActivity::class.java)
+            intent.putExtra(ARG_profileID, profileID)
             startActivity(intent)
         }
 
@@ -80,9 +80,6 @@ class GamesOverviewFragment : Fragment() {
 
         }
 
-
-
-
         return root
     }
 
@@ -99,7 +96,7 @@ class GamesOverviewFragment : Fragment() {
         fun newInstance(userID: Int) =
             GamesOverviewFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_userID, userID)
+                    putInt(ARG_profileID, userID)
                 }
             }
     }

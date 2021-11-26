@@ -74,7 +74,6 @@ class NavigationActivity : AppCompatActivity() {
             }
         }*/
         binding.bottomNavigation3.setOnItemSelectedListener { item ->
-            Toast.makeText(applicationContext, "Test2", Toast.LENGTH_SHORT).show()
 
             when (item.itemId) {
                 R.id.bot_game_overview -> {

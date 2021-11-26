@@ -55,6 +55,7 @@
     <string name="save_string">Gem</string>
     <string name="title_string">Title:</string>
     <string name="long_text_field_header">Long Text Field</string>
+    <string name="alert_personal_character">Give din karakter et navn!\n(det kan altid ændres senere)</string>
 
 
     <string-array name="character_creation_insert_array">
