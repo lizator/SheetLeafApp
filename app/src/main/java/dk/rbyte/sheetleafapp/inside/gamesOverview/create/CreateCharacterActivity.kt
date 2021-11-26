@@ -66,6 +66,15 @@ class CreateCharacterActivity : AppCompatActivity() {
 
         //Setting op switch Btns
         binding.editSwap.setOnClickListener {
+            //Saving titles in dataFields
+            for (i in 0..dataFields.size-1) {
+                val vh = editRecycler.findViewHolderForAdapterPosition(i) as DragableCreationAdapter.ViewHolder
+                val title = vh.titleEdit.text.toString()
+                if (dataFields[i].title != title) {
+                    dataFields[i].title = title
+                    previewAdapter.notifyItemChanged(i)
+                }
+            }
             binding.editListView.visibility = View.GONE
             binding.previewListView.visibility = View.VISIBLE
         }
