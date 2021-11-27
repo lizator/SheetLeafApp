@@ -151,12 +151,12 @@ class CreateCharacterActivity : AppCompatActivity() {
 
 
         //TMP DATA
-        vm.dataFields.addAll(arrayListOf(
+        /*vm.dataFields.addAll(arrayListOf(
             DataField("R1", -1, "", 0, FieldTypes.REAL_NUMBER_FIELD),
             DataField("L1", -1, "", "", FieldTypes.LONG_STRING_FIELD),
             DataField("S1", -1, "", "", FieldTypes.SHORT_STRING_FIELD),
             DataField("S2", -1, "", "", FieldTypes.SHORT_STRING_FIELD)
-        ))
+        ))*/
 
 
     }
@@ -234,7 +234,7 @@ class CreateCharacterActivity : AppCompatActivity() {
                     viewHolder.header.text = "Tal (Maks. 9 cifre)"
                 }
                 FieldTypes.LONG_STRING_FIELD -> {
-                    viewHolder.header.text = "Lang tekst (8192 karakterer))"
+                    viewHolder.header.text = "Lang tekst (8192 karakterer)"
                 }
                 FieldTypes.SHORT_STRING_FIELD -> {
                     viewHolder.header.text = "Kort tekst (64 karakterer)"

@@ -49,6 +49,32 @@ class CharacterSheetFragment : Fragment() {
 
         initSheet()
 
+        binding.saveBtn.setOnClickListener {
+            val character = vm.collectionLiveData.value!!.character
+            character.name = binding.editName.text.toString()
+
+            for (i in 0..vm.sheetFields.size-1) {
+                val v = binding.fieldRecycler.findViewHolderForAdapterPosition(i) as CharacterFieldAdapter.ViewHolder
+                val field = vm.sheetFields[i]
+                when (field.type) {
+                    FieldTypes.REAL_NUMBER_FIELD -> {
+                        field.value = v.realNumberValue.text.toString().toInt()
+                    }
+                    FieldTypes.LONG_STRING_FIELD -> {
+                        field.value = v.longStringValue.text.toString()
+                    }
+                    FieldTypes.SHORT_STRING_FIELD -> {
+                        field.value = v.shortStringValue.text.toString()
+                    }
+                    else -> {
+                        //Error
+                    }
+                }
+            }
+            vm.updateCharacter(character)
+        }
+
+        //Setting up observers
         vm.collectionLiveData.observe(viewLifecycleOwner, {collection ->
             if (vm.updated && collection != null) {
                 binding.editName.setText(collection.character.name)
