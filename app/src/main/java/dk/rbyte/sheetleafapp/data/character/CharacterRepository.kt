@@ -9,7 +9,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 class CharacterRepository {
 
@@ -34,14 +36,33 @@ class CharacterRepository {
             }
         })
 
+    }
 
+    fun getCharactersFromProfile(profileID: Int, callback: (Result<ArrayList<CharacterDTO>>) -> Unit) {
+        val characterAPI = CharacterApi.create().getCharactersFromProfile(profileID)
+
+        characterAPI.enqueue(object : Callback<ArrayList<CharacterDTO>> {
+            override fun onResponse(call: Call<ArrayList<CharacterDTO>>, response: Response<ArrayList<CharacterDTO>>) {
+                when {
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body == null) callback(Result.failure(Exception()))
+                        else callback(Result.success(body))
+                    }
+                    else -> callback(Result.failure(Exception(getError(response.code()))))
+                }
+            }
+
+            override fun onFailure(call: Call<ArrayList<CharacterDTO>>, t: Throwable) {
+                callback(Result.failure(t))
+            }
+        })
     }
 
     private fun getError(errorCode: Int): String {
         return when (errorCode) {
             206  -> LoginActivity.appResources.getString(R.string.common_206)
-            403  -> LoginActivity.appResources.getString(R.string.login_403)
-            404  -> LoginActivity.appResources.getString(R.string.login_404)
+            400  -> LoginActivity.appResources.getString(R.string.common_400)
             500  -> LoginActivity.appResources.getString(R.string.common_500)
             else -> LoginActivity.appResources.getString(R.string.common_unknown_error)
         }
@@ -54,6 +75,11 @@ class CharacterRepository {
 interface CharacterApi {
     @POST("/api/character/create")
     fun createCharacter(@Body dto: CharacterCollectionDTO): Call<CharacterCollectionDTO>
+
+    @GET("/api/character/getByProfile/{profileID}")
+    fun getCharactersFromProfile(@Path("profileID") profileID: Int): Call<ArrayList<CharacterDTO>>
+
+
 
     companion object {
 

@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TextZone"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp"
+        android:maxLength="64"/>
 
 </LinearLayout>

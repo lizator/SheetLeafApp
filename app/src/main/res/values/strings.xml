@@ -17,6 +17,7 @@
     <!-- Errors -->
     <string name="exception_error">NULL Exception</string>
     <string name="common_206">Der skete en manglende data fejl.</string>
+    <string name="common_400">Der skete en fejl i backenden</string>
     <string name="common_500">Der skete en intern fejl.</string>
     <string name="common_unknown_error">Der skete en ukendt fejl.</string>
 
@@ -55,8 +56,9 @@
     <string name="save_string">Gem</string>
     <string name="title_string">Title:</string>
     <string name="long_text_field_header">Long Text Field</string>
-    <string name="alert_personal_character">Give din karakter et navn!\n(det kan altid ændres senere)</string>
-
+    <string name="alert_personal_character">Det kan altid ændres senere</string>
+    <string name="name_header">Navn:</string>
+    <string name="choose_string">Vælg</string>
 
     <string-array name="character_creation_insert_array">
         <item>Lang tekst</item>

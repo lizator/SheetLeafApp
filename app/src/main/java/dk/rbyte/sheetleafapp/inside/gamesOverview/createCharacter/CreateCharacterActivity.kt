@@ -165,7 +165,7 @@ class CreateCharacterActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
 
         val inflater = layoutInflater
-        builder.setTitle("With EditText")
+        builder.setTitle("Giv din karakter et navn!")
         val dialogLayout = inflater.inflate(R.layout.alert_create_personal_character, null)
         val editText  = dialogLayout.findViewById<EditText>(R.id.editName)
         builder.setView(dialogLayout)

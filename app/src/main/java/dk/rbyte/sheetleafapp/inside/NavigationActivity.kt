@@ -18,7 +18,7 @@ class NavigationActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNavigationBinding
     private lateinit var gamesOverviewFragment: GamesOverviewFragment
     private lateinit var profileOverviewFragment: Fragment
-    private lateinit var characterSheetFragment: CharacterSheetFragment
+    private var characterSheetFragment: CharacterSheetFragment? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,43 +36,10 @@ class NavigationActivity : AppCompatActivity() {
 
         gamesOverviewFragment = GamesOverviewFragment.newInstance(userID)
         profileOverviewFragment = Fragment()//ProfileOverviewFragment.newInstance("","")
-        characterSheetFragment = CharacterSheetFragment.newInstance(-1,"S1,L1,R1,R2")
+        characterSheetFragment = null//CharacterSheetFragment.newInstance(-1,"S1,L1,R1,R2")
 
         replaceFragment(gamesOverviewFragment)
 
-        /*binding.gameOverviewBtn.setOnClickListener {
-            replaceFragment(gamesOverviewFragment)
-        }
-
-        binding.characterSheetBtn.setOnClickListener {
-            replaceFragment(characterSheetFragment)
-        }
-
-        binding.profileSettingsBtn.setOnClickListener {
-            Toast.makeText(applicationContext, "Not implemented!", Toast.LENGTH_SHORT).show()
-        }*/
-
-
-
-        /*binding.bottomNavigation3.setOnItemReselectedListener { item ->
-            Toast.makeText(applicationContext, "Test", Toast.LENGTH_SHORT).show()
-
-            when (item.itemId) {
-                R.id.bot_game_overview -> {
-                    replaceFragment(gamesOverviewFragment)
-                    true
-                }
-                R.id.bot_character_sheet -> {
-                    replaceFragment(characterSheetFragment)
-                    true
-                }
-                R.id.bot_settings -> {
-                    replaceFragment(profileOverviewFragment)
-                    true
-                }
-                else -> false
-            }
-        }*/
         binding.bottomNavigation3.setOnItemSelectedListener { item ->
 
             when (item.itemId) {
@@ -81,11 +48,15 @@ class NavigationActivity : AppCompatActivity() {
                     true
                 }
                 R.id.bot_character_sheet -> {
-                    replaceFragment(characterSheetFragment)
+                    if (characterSheetFragment != null)
+                        replaceFragment(characterSheetFragment!!)
+                    else
+                        Toast.makeText(this, "Der skal vælges en karakter først!", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.bot_settings -> {
-                    replaceFragment(profileOverviewFragment)
+                    Toast.makeText(this, "Ikke implementeret", Toast.LENGTH_SHORT).show()
+                    //replaceFragment(profileOverviewFragment)
                     true
                 }
                 else -> false
@@ -93,15 +64,22 @@ class NavigationActivity : AppCompatActivity() {
 
         }
 
+        //Observer for when choosing a character
+        gamesOverviewFragment.chosenCharacter.observe(this, { character ->
+            if (character != null) {
+                characterSheetFragment =
+                    CharacterSheetFragment.newInstance(character.characterID!!, character.sheet!!)
+                replaceFragment(characterSheetFragment!!)
+            }
+        })
+
 
     }
 
 
     private fun replaceFragment(fragment: Fragment) {
-        if (fragment != null) { //TODO fix so it does not change until a character is selected
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fl_wrapper, fragment)
-            transaction.commit()
-        }
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fl_wrapper, fragment)
+        transaction.commit()
     }
 }

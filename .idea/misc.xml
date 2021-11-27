@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/layout/fragment_profile_overview.xml" value="0.26197916666666665" />
         <entry key="app/src/main/res/layout/fragment_real_number.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_short_string.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_character.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/recycler_collected_fields.xml" value="0.25" />
         <entry key="app/src/main/res/layout/recycler_create_charactersheet_field_line.xml" value="0.5" />
         <entry key="app/src/main/res/layout/recycler_simple_fragment.xml" value="0.35572916666666665" />
