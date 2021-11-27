@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dk.rbyte.sheetleaf.data.character.fields.FieldTypes
@@ -28,6 +29,8 @@ class CharacterSheetFragment : Fragment() {
     private var characterID: Int? = null
     private var characterSheet: String? = null
 
+    private val vm = CharacterSheetViewModel()
+
     private val sheetFields = ArrayList<DataField>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +48,6 @@ class CharacterSheetFragment : Fragment() {
         _binding = FragmentCharacterSheetBinding.inflate(inflater, container, false)
 
 
-
-
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         binding.fieldRecycler.layoutManager = llm
@@ -54,10 +55,38 @@ class CharacterSheetFragment : Fragment() {
 
         initSheet()
 
-        //adapter.notifyDataSetChanged()
+        vm.collectionLiveData.observe(viewLifecycleOwner, {collection ->
+            if (vm.updated && collection != null) {
+                binding.editName.setText(collection.character.name)
+                if (collection.character.sheet != characterSheet) {
+                    characterSheet = collection.character.sheet
+                    initSheet()
+                }
+
+                for (i in 0..collection.fields.size - 1) {
+                    sheetFields[i] = collection.fields[i]
+                    adapter.notifyItemChanged(i)
+                }
+                vm.updated = false
+            }
+
+        })
+
+        vm.errorLiveData.observe(viewLifecycleOwner, {msg ->
+            if (vm.updated && msg != null){
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                vm.updated = false
+                vm.errorLiveData.value = null
+            }
+        })
 
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.setCharacter(characterID!!)
     }
 
     companion object {
@@ -73,26 +102,31 @@ class CharacterSheetFragment : Fragment() {
 
     private fun initSheet() {
         val sheetIDs = characterSheet!!.split(",")
-        sheetFields.clear()
+        val size = sheetFields.size
+        if (size > 0) {
+            sheetFields.clear()
+            adapter.notifyItemRangeRemoved(0, size)
+        }
         for (sheetID in sheetIDs) {
             when (sheetID[0]) {
                 'S' -> {
                     //Short string field
-                    sheetFields.add(DataField(sheetID, characterID!!, "Title1", "test", FieldTypes.SHORT_STRING_FIELD))
+                    sheetFields.add(DataField(sheetID, characterID!!, "Title", "", FieldTypes.SHORT_STRING_FIELD))
 
                 }
                 'L' -> {
                     //Long string field
-                    sheetFields.add(DataField(sheetID, characterID!!, "Title2", "test2", FieldTypes.LONG_STRING_FIELD))
+                    sheetFields.add(DataField(sheetID, characterID!!, "Title", "", FieldTypes.LONG_STRING_FIELD))
                 }
                 'R' -> {
                     //Real number field
-                    sheetFields.add(DataField(sheetID, characterID!!, "Title3 $sheetID", 0, FieldTypes.REAL_NUMBER_FIELD))
+                    sheetFields.add(DataField(sheetID, characterID!!, "Title", 0, FieldTypes.REAL_NUMBER_FIELD))
                 }
                 else -> {
                     //Error
                 }
             }
+            adapter.notifyItemInserted(sheetFields.size-1)
         }
     }
 

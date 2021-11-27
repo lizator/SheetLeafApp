@@ -120,6 +120,17 @@ class GamesOverviewFragment : Fragment() {
                     }
                 }
 
+                vm.updated = false
+
+            }
+        })
+
+        vm.errorLiveData.observe(viewLifecycleOwner, {
+            if (vm.updated && vm.errorLiveData.value != null) {
+                Toast.makeText(context, vm.errorLiveData.value.toString(), Toast.LENGTH_SHORT).show()
+                vm.updated = false
+                vm.errorLiveData.value = null
+
             }
         })
 

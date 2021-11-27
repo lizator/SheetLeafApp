@@ -24,7 +24,7 @@ class CharacterRepository {
                 when {
                     response.isSuccessful -> {
                         val body = response.body()
-                        if (body == null) callback(Result.failure(Exception()))
+                        if (body == null) callback(Result.failure(Exception(getError(206))))
                         else callback(Result.success(body))
                     }
                     else -> callback(Result.failure(Exception(getError(response.code()))))
@@ -46,7 +46,7 @@ class CharacterRepository {
                 when {
                     response.isSuccessful -> {
                         val body = response.body()
-                        if (body == null) callback(Result.failure(Exception()))
+                        if (body == null) callback(Result.failure(Exception(getError(206))))
                         else callback(Result.success(body))
                     }
                     else -> callback(Result.failure(Exception(getError(response.code()))))
@@ -54,6 +54,48 @@ class CharacterRepository {
             }
 
             override fun onFailure(call: Call<ArrayList<CharacterDTO>>, t: Throwable) {
+                callback(Result.failure(t))
+            }
+        })
+    }
+
+    fun getCharacter(characterID: Int, callback: (Result<CharacterCollectionDTO>) -> Unit) {
+        val characterAPI = CharacterApi.create().getCharacter(characterID)
+
+        characterAPI.enqueue(object : Callback<CharacterCollectionDTO> {
+            override fun onResponse(call: Call<CharacterCollectionDTO>, response: Response<CharacterCollectionDTO>) {
+                when {
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body == null) callback(Result.failure(Exception(getError(206))))
+                        else callback(Result.success(body))
+                    }
+                    else -> callback(Result.failure(Exception(getError(response.code()))))
+                }
+            }
+
+            override fun onFailure(call: Call<CharacterCollectionDTO>, t: Throwable) {
+                callback(Result.failure(t))
+            }
+        })
+    }
+
+    fun updateCharacter(collection: CharacterCollectionDTO, callback: (Result<CharacterCollectionDTO>) -> Unit) {
+        val characterAPI = CharacterApi.create().updateCharacter(collection)
+
+        characterAPI.enqueue(object : Callback<CharacterCollectionDTO> {
+            override fun onResponse(call: Call<CharacterCollectionDTO>, response: Response<CharacterCollectionDTO>) {
+                when {
+                    response.isSuccessful -> {
+                        val body = response.body()
+                        if (body == null) callback(Result.failure(Exception(getError(206))))
+                        else callback(Result.success(body))
+                    }
+                    else -> callback(Result.failure(Exception(getError(response.code()))))
+                }
+            }
+
+            override fun onFailure(call: Call<CharacterCollectionDTO>, t: Throwable) {
                 callback(Result.failure(t))
             }
         })
@@ -76,9 +118,14 @@ interface CharacterApi {
     @POST("/api/character/create")
     fun createCharacter(@Body dto: CharacterCollectionDTO): Call<CharacterCollectionDTO>
 
+    @POST("/api/character/update")
+    fun updateCharacter(@Body dto: CharacterCollectionDTO): Call<CharacterCollectionDTO>
+
     @GET("/api/character/getByProfile/{profileID}")
     fun getCharactersFromProfile(@Path("profileID") profileID: Int): Call<ArrayList<CharacterDTO>>
 
+    @GET("/api/character/getByID/{characterID}")
+    fun getCharacter(@Path("characterID")characterID: Int): Call<CharacterCollectionDTO>
 
 
     companion object {
