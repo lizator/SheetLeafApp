@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import dk.rbyte.sheetleafapp.R
 import dk.rbyte.sheetleafapp.data.character.CharacterCollectionDTO
 import dk.rbyte.sheetleafapp.data.character.CharacterRepository
+import dk.rbyte.sheetleafapp.data.character.fields.DataField
 import java.lang.Exception
 
 class CharacterSheetViewModel() {
@@ -14,6 +15,10 @@ class CharacterSheetViewModel() {
     var updated = false
     val errorLiveData = MutableLiveData<String?>(null)
     val collectionLiveData = MutableLiveData<CharacterCollectionDTO?>(null)
+
+    var characterID: Int? = null
+    var characterSheet: String? = null
+    val sheetFields = ArrayList<DataField>()
 
     fun setCharacter(characterID: Int) {
         characterRepo.getCharacter(characterID) { result ->

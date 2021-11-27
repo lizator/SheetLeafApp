@@ -25,19 +25,13 @@ class CharacterSheetFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val adapter = CharacterFieldAdapter()
-
-    private var characterID: Int? = null
-    private var characterSheet: String? = null
-
     private val vm = CharacterSheetViewModel()
-
-    private val sheetFields = ArrayList<DataField>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            characterID = it.getInt(ARG_CHARACTER_ID)
-            characterSheet = it.getString(ARG_CHARACTER_SHEET)
+            vm.characterID = it.getInt(ARG_CHARACTER_ID)
+            vm.characterSheet = it.getString(ARG_CHARACTER_SHEET)
         }
     }
 
@@ -58,13 +52,13 @@ class CharacterSheetFragment : Fragment() {
         vm.collectionLiveData.observe(viewLifecycleOwner, {collection ->
             if (vm.updated && collection != null) {
                 binding.editName.setText(collection.character.name)
-                if (collection.character.sheet != characterSheet) {
-                    characterSheet = collection.character.sheet
+                if (collection.character.sheet != vm.characterSheet) {
+                    vm.characterSheet = collection.character.sheet
                     initSheet()
                 }
 
                 for (i in 0..collection.fields.size - 1) {
-                    sheetFields[i] = collection.fields[i]
+                    vm.sheetFields[i] = collection.fields[i]
                     adapter.notifyItemChanged(i)
                 }
                 vm.updated = false
@@ -86,7 +80,7 @@ class CharacterSheetFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        vm.setCharacter(characterID!!)
+        vm.setCharacter(vm.characterID!!)
     }
 
     companion object {
@@ -101,32 +95,32 @@ class CharacterSheetFragment : Fragment() {
     }
 
     private fun initSheet() {
-        val sheetIDs = characterSheet!!.split(",")
-        val size = sheetFields.size
+        val sheetIDs = vm.characterSheet!!.split(",")
+        val size = vm.sheetFields.size
         if (size > 0) {
-            sheetFields.clear()
+            vm.sheetFields.clear()
             adapter.notifyItemRangeRemoved(0, size)
         }
         for (sheetID in sheetIDs) {
             when (sheetID[0]) {
                 'S' -> {
                     //Short string field
-                    sheetFields.add(DataField(sheetID, characterID!!, "Title", "", FieldTypes.SHORT_STRING_FIELD))
+                    vm.sheetFields.add(DataField(sheetID, vm.characterID!!, "Title", "", FieldTypes.SHORT_STRING_FIELD))
 
                 }
                 'L' -> {
                     //Long string field
-                    sheetFields.add(DataField(sheetID, characterID!!, "Title", "", FieldTypes.LONG_STRING_FIELD))
+                    vm.sheetFields.add(DataField(sheetID, vm.characterID!!, "Title", "", FieldTypes.LONG_STRING_FIELD))
                 }
                 'R' -> {
                     //Real number field
-                    sheetFields.add(DataField(sheetID, characterID!!, "Title", 0, FieldTypes.REAL_NUMBER_FIELD))
+                    vm.sheetFields.add(DataField(sheetID, vm.characterID!!, "Title", 0, FieldTypes.REAL_NUMBER_FIELD))
                 }
                 else -> {
                     //Error
                 }
             }
-            adapter.notifyItemInserted(sheetFields.size-1)
+            adapter.notifyItemInserted(vm.sheetFields.size-1)
         }
     }
 
@@ -166,7 +160,7 @@ class CharacterSheetFragment : Fragment() {
 
             // Get element from your dataset at this position and replace the
             // contents of the view with that element
-            val dataField = sheetFields[pos]
+            val dataField = vm.sheetFields[pos]
 
             when (dataField.type) {
                 FieldTypes.REAL_NUMBER_FIELD -> {
@@ -192,7 +186,7 @@ class CharacterSheetFragment : Fragment() {
         }
 
         // Return the size of your dataset (invoked by the layout manager)
-        override fun getItemCount() = sheetFields.size
+        override fun getItemCount() = vm.sheetFields.size
 
     }
 
