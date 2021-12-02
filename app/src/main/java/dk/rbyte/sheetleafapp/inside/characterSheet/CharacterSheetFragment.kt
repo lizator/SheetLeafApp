@@ -84,8 +84,13 @@ class CharacterSheetFragment : Fragment() {
                 }
 
                 for (i in 0..collection.fields.size - 1) {
-                    vm.sheetFields[i] = collection.fields[i]
-                    adapter.notifyItemChanged(i)
+                    for (j in 0..vm.sheetFields.size - 1) {
+                        if (vm.sheetFields[j].id == collection.fields[i].id) {
+                            vm.sheetFields[j] = collection.fields[i]
+                            adapter.notifyItemChanged(j)
+                            break
+                        }
+                    }
                 }
                 vm.updated = false
             }
@@ -187,6 +192,8 @@ class CharacterSheetFragment : Fragment() {
             // Get element from your dataset at this position and replace the
             // contents of the view with that element
             val dataField = vm.sheetFields[pos]
+
+
 
             when (dataField.type) {
                 FieldTypes.REAL_NUMBER_FIELD -> {
