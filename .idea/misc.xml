@@ -3,10 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.278125" />
+        <entry key="app/src/main/res/drawable/ic_add_game.xml" value="0.278125" />
+        <entry key="app/src/main/res/drawable/ic_character_sheet.xml" value="0.278125" />
+        <entry key="app/src/main/res/drawable/ic_person_add.xml" value="0.278125" />
         <entry key="app/src/main/res/drawable/rounded_corners.xml" value="0.284375" />
+        <entry key="app/src/main/res/layout/activity_create_character.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_create_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_navigation.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/alert_create_personal_character.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_character_sheet.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_field.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_games_overview.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_long_string.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_profile_overview.xml" value="0.26197916666666665" />
+        <entry key="app/src/main/res/layout/fragment_real_number.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_short_string.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_character.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/recycler_collected_fields.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/recycler_create_charactersheet_field_line.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/recycler_simple_fragment.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/bot_nav_menu.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/bot_nav_menu3.xml" value="0.24010416666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2140625" />
       </map>
     </option>
   </component>

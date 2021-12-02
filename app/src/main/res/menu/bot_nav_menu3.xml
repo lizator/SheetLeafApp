@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bot_game_overview"
+        android:icon="@drawable/ic_game_overview"
+        android:title="@string/bot_nav_games"/>
+
+    <item
+        android:id="@+id/bot_character_sheet"
+        android:icon="@drawable/ic_character_sheet"
+        android:title="@string/bot_nav_character_sheet"/>
+
+    <item
+        android:id="@+id/bot_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/bot_nav_settings"/>
+
+</menu>

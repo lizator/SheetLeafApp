@@ -1,96 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".outside.LoginActivity"
     android:background="@color/paper">
     <!--TODO: add change language -->
-    <TextView
-        android:id="@+id/loginTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/textTitle"
-        android:text="@string/title"
-        android:layout_gravity="center"
-        android:gravity="bottom"
-        android:layout_margin="20dp"
-        tools:viewBindingIgnore="true"
-        android:layout_weight="1"/>
 
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        android:layout_weight="2">
+        android:elevation="2dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
 
-        <EditText
-            android:id="@+id/editEmail"
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/loginTitle"
+            style="@style/textTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/email_hint"
-            style="@style/TextZone"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/password_hint"
-            style="@style/TextZone"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:inputType="textPassword" />
-
-        <Button
-            android:id="@+id/loginbtn"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="10dp"
-            android:layout_height="wrap_content"
-            android:text="@string/login_btn"
-            android:clickable="false"/>
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="@string/title"
+            tools:viewBindingIgnore="true" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:viewBindingIgnore="true" >
-            <TextView
-                android:id="@+id/forgotPassword"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:text="test9@gmail.com"
+                android:imeOptions="actionNext"
+                android:id="@+id/editEmail"
+                style="@style/TextZone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/text"
-                android:layout_weight="50"
-                android:textColor="@color/colorLink"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/forgot_pass" />
-            <TextView
-                android:id="@+id/newProfile"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:hint="@string/email_hint"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:text="password"
+                android:imeOptions="actionDone"
+                android:id="@+id/editPassword"
+                style="@style/TextZone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/text"
-                android:layout_weight="50"
-                android:textColor="@color/colorLink"
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:gravity="end"
-                android:text="@string/new_profile" />
+                android:ems="10"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword" />
+
+            <Button
+                android:id="@+id/loginbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:clickable="false"
+                android:text="@string/login_btn" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:viewBindingIgnore="true">
+
+                <TextView
+                    android:id="@+id/forgotPassword"
+                    style="@style/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="50"
+                    android:text="@string/forgot_pass"
+                    android:textColor="@color/colorLink" />
+
+                <TextView
+                    android:id="@+id/newProfile"
+                    style="@style/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="50"
+                    android:gravity="end"
+                    android:text="@string/new_profile"
+                    android:textColor="@color/colorLink" />
+            </LinearLayout>
         </LinearLayout>
+
+
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

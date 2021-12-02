@@ -2,17 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dk.rbyte.sheetleafapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_sheet_leaf_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_sheet_leaf_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SheetLeafApp">
+        android:theme="@style/Theme.SheetLeafApp"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".inside.gamesOverview.createCharacter.CreateCharacterActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".inside.NavigationActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".outside.CreateProfileActivity"
             android:exported="true"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".outside.LoginActivity"
             android:exported="true">
